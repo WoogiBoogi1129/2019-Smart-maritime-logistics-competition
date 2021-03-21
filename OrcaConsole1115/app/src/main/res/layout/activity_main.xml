@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".main.MainActivity"
+    android:id="@+id/mainLayout"
+    >
+
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/mainLayout"
+            layout="@layout/layout_gamepad"
+            android:visibility="gone"/>
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/mainLayout"
+            layout="@layout/layout_server"
+            android:visibility="visible"
+
+            />
+        <!--웹 뷰-->
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/mainLayout"
+            layout="@layout/layout_webview"
+            android:visibility="gone"
+            />
+
+</FrameLayout>

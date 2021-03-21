@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">범고래호\n제어부</string>
+
+    <string name="clientText">컨트롤러로 부터 온 값</string>
+    <string name="raspiText">라즈베리파이로 보낼 값</string>
+    <string name="winChan">화면전환</string>
+
+    <string name="defaultAngle">Midships</string>
+    <string name="defaultSpeed">Stop</string>
+
+    <string name="angle">각도:&#160;</string>
+    <string name="speed">속도:&#160;</string>
+    <string name="latitude">위도:&#160;</string>
+    <string name="longitude">경도:&#160;</string>
+</resources>

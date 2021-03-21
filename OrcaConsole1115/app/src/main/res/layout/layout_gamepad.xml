@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gamepadbacground2"
+    android:id="@+id/windowGamePad">
+
+        <!--서버 접속과 관련된 부분 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="900dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center_vertical"
+            android:paddingTop="2dp"
+            android:id="@+id/serverInfoBox"
+            android:layout_weight="1"
+            android:layout_margin="1dp"
+            android:orientation="horizontal"
+            >
+
+            <!--10.14는 shipbg1014 // 09.24는 shipgpsbg-->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/shipbg1014"
+                    android:layout_marginRight="40dp"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/gpsIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:src="@drawable/gpsicon2"
+                    android:background="@android:color/transparent"
+                    android:onClick="onClick"
+                    android:padding="5dp"
+                    />
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="120dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <!-- 19.08.23 p2p IP 받아오는 텍스트 박스인데 숨김-->
+                    <TextView
+                        android:layout_width="373dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:textColor="#ffffff"
+                        android:gravity="center"
+                        android:id="@+id/cliServerIpText"
+                        />
+
+
+                </LinearLayout>
+
+                <GridLayout
+                    android:id="@+id/gridLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:columnCount="2">
+
+                    <!--19.10.14 이 부분은 아래 19.09.24 수정 했던 부분의
+                    훈식이 스마트폰의 상황에 맞게 바꾼것-->
+                    <TextView
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/angle"
+                        android:textColor="@color/gamePadText"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvAngleData"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="14dp"
+                        android:textColor="@color/gamePadText"
+                        android:text="@string/defaultAngle"
+                        />
+
+                    <TextView
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/speed"
+                        android:textColor="@color/gamePadText"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvSpeedData"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="14dp"
+                        android:textColor="@color/gamePadText"
+                        android:text="@string/defaultSpeed"
+                        />
+
+
+
+                    <TextView
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/latitude"
+                        android:textColor="@color/gamePadText"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvGpsLatitudePad"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="14dp"
+                        android:textStyle="normal"
+                        />
+
+                    <TextView
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/longitude"
+                        android:textColor="@color/gamePadText"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvGpsLongitudePad"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="14dp"
+                        android:textStyle="normal"/>
+
+                    <!--19.09.24 수정사항-->
+                    <!--<TextView-->
+                        <!--android:layout_gravity="start"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:text="@string/angle"-->
+                        <!--android:textColor="@color/gamePadText"-->
+                        <!--android:textSize="16dp"-->
+                        <!--android:textStyle="bold" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tvAngleData"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:textSize="16dp"-->
+                        <!--android:textColor="@color/gamePadText"-->
+                        <!--android:text="@string/defaultAngle"-->
+                        <!--/>-->
+
+                    <!--<TextView-->
+                        <!--android:layout_gravity="start"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:text="@string/speed"-->
+                        <!--android:textColor="@color/gamePadText"-->
+                        <!--android:textSize="16dp"-->
+                        <!--android:textStyle="bold" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tvSpeedData"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:textSize="16dp"-->
+                        <!--android:textColor="@color/gamePadText"-->
+                        <!--android:text="@string/defaultSpeed"-->
+                        <!--/>-->
+
+
+
+                    <!--<TextView-->
+                        <!--android:layout_gravity="start"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:text="@string/latitude"-->
+                        <!--android:textColor="@color/gamePadText"-->
+                        <!--android:textSize="16dp"-->
+                        <!--android:textStyle="bold" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tvGpsLatitudePad"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:textSize="16dp"-->
+                        <!--/>-->
+
+                    <!--<TextView-->
+                        <!--android:layout_gravity="start"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:text="@string/longitude"-->
+                        <!--android:textColor="@color/gamePadText"-->
+                        <!--android:textSize="16dp"-->
+                        <!--android:textStyle="bold" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tvGpsLongitudePad"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:textSize="16dp" />-->
+
+
+                </GridLayout>
+
+            </FrameLayout>
+
+
+        </FrameLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:gravity="right"
+            android:layout_gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/serverOpenCloseBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="center"
+                android:src="@drawable/connect"
+                android:background="@android:color/transparent"
+                android:onClick="onClick" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+    <!--T짜 아래-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.3"
+        android:orientation="horizontal"
+        >
+
+        <!-- 왼쪽 레버 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/leftLever"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginLeft="80dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/transparent"
+                android:onClick="onClick"
+                android:src="@drawable/decelbtn" />
+        </LinearLayout>
+
+
+
+        <!-- 타기 위치할 곳 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center">
+                    <ImageView
+                        android:id="@+id/progressImage"
+                        android:layout_width="135dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/progress"
+                        android:foregroundGravity="top"/>
+
+                    <!--왼쪽 progressBar-->
+                    <ProgressBar
+                        android:id="@+id/leftProgress"
+                        android:layout_width="135dp"
+                        android:layout_height="181dp"
+                        style="?android:progressBarStyleHorizontal"
+                        android:max="690"
+                        android:rotation="270"
+                        android:scaleY="-1"
+                        android:progressDrawable="@drawable/circle"
+
+                        />
+
+                    <!--오른쪽 progressBar-->
+                    <ProgressBar
+                        android:id="@+id/rightProgress"
+                        android:layout_width="135dp"
+                        android:layout_height="181dp"
+                        style="?android:progressBarStyleHorizontal"
+                        android:max="690"
+                        android:rotation="270"
+                        android:progressDrawable="@drawable/circle"
+
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!-- 자이로휠 이미지-->
+            <com.orca.orcaconsole.control.GyroControl
+                android:id="@+id/gyro_control"
+                android:layout_width="120dp"
+                android:layout_height="260dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:onClick="onClick"
+                />
+
+
+        </LinearLayout>
+
+        <!-- 오른쪽 레버-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+
+            <ImageButton
+                android:id="@+id/rightLever"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:background="@android:color/transparent"
+                android:onClick="onClick"
+                android:src="@drawable/accelbtn"
+                android:layout_marginLeft="18dp"
+                android:layout_marginBottom="20dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
