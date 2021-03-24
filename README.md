@@ -127,7 +127,7 @@
 - 인터넷 연결 버튼 : 구름 모양의 이미지는 버튼 기능을 합니다. 이는 인터넷과 연결되어 조종기 앱으로부터 드론의 방향과 속도 값을 받을 수 있게 합니다. 또한, 배경 이미지에 어울리도록 구름 이미지로 디자인했습니다.
 - GPS : 수상드론의 위치를 조종기 앱으로 송신 및 가시화
 
-### 시뮬레이션 알고리즘 제작
+### 시뮬레이션
 
 ![6](https://user-images.githubusercontent.com/47939832/111902869-cd51be00-8a82-11eb-86e7-0bb1c6d1c3dd.png)
 
@@ -149,6 +149,60 @@
         1. 마우스 좌표값에 따라 특정 좌표값을 넘어가면, 원하는 setting 버튼을 선택할 수 있게 알고리즘을 구성
         2. 마우스 좌측 -> 메뉴 선택
         3. 마우스 우측 -> 이전 환경설정 화면
+
+- BluePrint 알고리즘( 환경 Setting menu )
+
+    - MainWidgetVisibility
+        
+        **Main 화면 UI에 해당하는 버튼의 visibility를 정의하는 함수 블루프린트**
+        
+        ![19](https://user-images.githubusercontent.com/47939832/112264578-716e7b80-8cb4-11eb-91ac-0476e25ce8d9.png)
+        
+        - 메인 화면에서 시작이나 종료 버튼을 누르면 OnClicked(시작버튼) 이벤트가 실행되어 MainButtonSelected 변수값을 true로 설정하였다. 이 변수값을 이용하여, true이면 메인 화면의 버튼을 눌렀다는 의미이므로 Main Visibility를 hidden으로 설정한다. MainButtonSelected 변수값이 false 이면 메인 화면의 버튼을 누르지 않았다는 의미이므로 메인 화면 버튼 UI를 표시해야하므로 MainVisibility를 visible로 설정한다. MainVisibility는 MainWidgetVisibility의 estateVisibility 리턴값으로 설정되고 estateVisibility 리턴값에 따라 화면에 MainWidgetVisibility의 영향을 받는 버튼과 이미지(메인화면 버튼 UI)가 보여지게 된다.
+        
+    - ShipSelectButtonVisibility
+        
+        **배 선택 화면 UI에 해당하는 버튼의 visibility를 정의하는 함수 블루프린트**
+        
+        ![20](https://user-images.githubusercontent.com/47939832/112264585-729fa880-8cb4-11eb-9c50-02eb6cfcb8ff.png)
+        
+        - 화면의 Visibility를 결정하기 위해 ShipSelected 변수와 MainSelected 변수가 사용되는데, 이 두 변수의 배타적 논리합에 따라 배 선택에 해당하는 UI들의 Visibility가 결정된다. 두 변수의 배타적 논리합을 한 결과값이 false인 경우 estateVisibility 변수의 hidden으로 간주하고, 결과값이 true인 경우 visible로 간주하였을 때의 진리표는 다음과 같다. 
+        
+            ![23](https://user-images.githubusercontent.com/47939832/112264936-f8bbef00-8cb4-11eb-9243-64331cdbf3b6.png)
+            
+        - 위젯 화면의 구성 순서에 따라서 MainButtonSelected값이 false이며 ShipSelected의 값이 true인 경우는 존재하지 않으므로 고려하지 않는다. 위의 테이블에서 연산의 결과값이 visible인 경우는 두 변수의 값이 다른 경우만 존재한다. 따라서 이를 조건식으로 삼아서 true(두 변수의 값이 다른 경우)이면 ShipSelectVisibility를 visible로 설정하고 false이면 hidden으로 설정한다. 
+        
+        - 두 변수의 값이 다른 경우 조건식에서 true가 되어 ShipSelectVisibility를 visible로 설정하는데 그 이후 GoBack이라는 bool 변수를 조건식으로 삼는 branch가 수행되게 된다. 이것은 사용자가 환경설정 위젯에서 마우스 오른쪽 버튼을 누르면 이전 화면을 나타나게 되는데 이 기능을 구현한 것이다. 마우스 오른쪽 버튼을 누르면 UlsanMap 레벨 블루프린트에서 UW_SimulSetting의 변수 GoBack을 true로 설정하게 된다. 그리고 UW_SimulSetting의 ShipSelectButtonVisibility 함수에서 ShipSelectVisibility 값이 visible으로 설정되면 GoBack 변수의 값에 따라, true이면 뒤로 가는 동작을 수행하기 위해 MainButtonSelected와 ShipSelected, GoBack의 값을 모두 false로 설정한다. MainButtonSelected의 값이 다시 false로 변경된다면 MainWidgetVisibility 함수에 의해 메인 화면의 visibility가 다시 visible로 설정되기 때문이다.
+        
+    - PortSelectButtonVisibility
+        
+        **부두 선택 화면 UI에 해당하는 버튼의 visibility를 정의하는 함수 블루프린트**
+        
+        ![21](https://user-images.githubusercontent.com/47939832/112264586-73383f00-8cb4-11eb-8834-d8c32f54986e.png)
+        
+        - PortSelectButtonVisibility 함수도 ShipSelectButtonVisibility 함수의 논리와 동일하다. 단지 다루는 변수가 MainButtonSelected가 아닌 PortSelected로 바뀌었을 뿐이다. 위의 테이블과 동일하게 배타적 논리합의 결과에 따라 visible과 hidden이 결정된다는 로직 또한 같다. ShipSelected가 true이고 PortSelected가 false일 때 PortSelectVisibility 값을 visible로 설정하고 ShipSelected와 PortSelected의 값이 같으면 PortSelectVisibility 값을 hidden으로 설정한다.
+        
+        - 뒤로가기 로직 또한 같다. 단지, 이전 설정단계 화면과 관련있는 변수 ShipSelected의 값을 false로 설정하고 뒤이어 현재 화면의 버튼이 선택되지 않았음을 설정하기 위해 PortSelected의 값을 false로 설정하고 GoBack의 변수 또한 false로 설정하여, 또 오른쪽 마우스 버튼을 눌렀을 때 GoBack의 값을 true로 설정하여 뒤로가기 기능이 제대로 동작할 수 있게 한다.
+        
+    - A/DSelectButtonVisibility
+        
+        **입,출항 선택 화면 UI에 해당하는 버튼의 visibility를 정의하는 함수 블루프린트**
+        
+        ![22](https://user-images.githubusercontent.com/47939832/112264588-73d0d580-8cb4-11eb-97c1-17ea97d8514f.png)
+        
+        - A/DSelectButtonVisibility 함수명의 A/D 중 A는 Arrival, D는 Departure를 의미하는 것으로 입출항 선택 화면의 visibility를 결정하는 함수이다. 이 함수 또한 위의 두 개의 화면 visibility 함수와 동일한 로직을 갖는다. SelectedArrivalMode와 SelectedDepartureMode의 논리합의 결과가 PortSelected 변수와 함께 배타적 논리합을 이루게 되는데 이 값이 조건식으로 사용된다.
+        
+        - SelectedArrivalMode와 SelectedDepartureMode가 OR로 연결된 까닭은, 입출항 모드 선택 화면에서 입항 모드와 출항 모드 둘 중 하나를 선택하여 선택을 결정하기 때문이다. 둘 중 하나가 선택되면 값이 true로 되고 논리합의 결과값이 true가 되어 입,출항 모드 선택이 완료되었음을 의미하게 된다. 위의 visibility 함수의 로직과 동일하게 이전 화면의 PortSelected 변수값과 논리합의 결과값의 배타적 논리합을 조건식으로 한다. 조건식이 true이면 A/DWidgetVisibility 값을 visible로 설정하고 false이면 hidden으로 설정한다.
+        
+        - 뒤로가기 기능도 마찬가지로 위의 visibility 함수와 동일한 로직을 갖는다. 마우스 오른쪽 버튼 클릭 동작으로 레벨 블루프린트에서 GoBack 변수를 true로 설정하고, 배타적 논리합한 결과값이 true이면 이전 화면의 Visibility를 결정하는 PortSelected 변수를 false로 설정하고 SelectedArrivalMode와 SelectedDepartureMode를 false로 설정하여 PortSelectButtonVisibility 함수에 의해 부두선택 화면이 보여지게 된다. 마지막으로 GoBack 변수를 false로 설정하여 다음 오른쪽 마우스 동작에도 뒤로가기 기능이 실행될 수 있도록 한다.
+        
+- BluePrint( 시뮬레이션과 아두이노<가변저항> 연결 )
+    
+    **아두이노 가변저항으로부터 읽어들인 값을 BP_ContainerShip의 변수에 저장을 하는 블루프린트**
+    
+    ![24](https://user-images.githubusercontent.com/47939832/112266758-d11a5600-8cb7-11eb-976b-ccd171417577.png)
+    
+    - 아두이노와 언리얼간의 연결을 하는 부분이다. 우선 언리얼과 연결 되기 이전에 아두이노에는 Serial 통신을 할 수 있는 코드가 삽입이 되어 있어야 한다. 오렌지보드 같은 상위 호환 보드에서는 먼저 연결을 하고 코드를 한번 더 업로드 함으로써 안정성을 확실하게 해주는 것이 좋다. 아두이노에 코드를 삽입한 후 언리얼 상 블루프린트에서 다음과 같은 작업을 한다. 기기마다 변화하는 Serial 포트 넘버로 인해 Integer 타입의 portNum이란 변수를 생성하고 그 곳에 현 아두이노와 연결된 포트번호를 숫자만 기입하면 된다. 이후 Open Serial Port 함수를 통해서 언리얼과 아두이노의 Serial 연결을 실행한다. 중간에 포트를 통해 String 타입을 한번 print를 해주는데 이것은 아두이노에서 무작정 값을 주는 것이 아니라 언리얼에서 읽어 들이는 값이 존재하면 아두이노의 Serial의 통신을 실행하는 것이다. 이후 통신이 열리게 되면 가변저항을 통한 값을 언리얼에 보내주게 되고 UE4 Arduino 플러그인 밑의 read 함수를 통해 들어온 값을 읽고 그 값을 float타입으로 캐스팅을 해주는데 이것이 곧 시뮬레이션 상의 속도를 조절하는 역할을 하는 값이다. 이후 이 값은 선택한 환경까지 똑같이 타고가 시뮬레이션 내의 선박의 속도 조절에 사용한다. 그리고 이 모든 과정이 끝난 후 Close Port를 통해 열린 포트를 닫아 준다.
         
 - 알고리즘 구성에 따른 화면 구성
     
@@ -160,3 +214,5 @@
     
     ![18](https://user-images.githubusercontent.com/47939832/112263829-446d9900-8cb3-11eb-86dd-204fb457e77c.png)
         
+        
+
