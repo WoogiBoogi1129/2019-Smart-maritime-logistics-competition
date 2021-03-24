@@ -227,5 +227,6 @@
         
 ## 최종 시연 영상
     
-    [![[2019 스마트 해상물류 프로젝트 경진대회][19-P625]-5G를 이용한 울산항 안전운항 시뮬레이션](http://img.youtube.com/vi/Kb9kTH-7CJw/0.jpg)](https://youtu.be/Kb9kTH-7CJw?t=0s)
+[![[2019 스마트 해상물류 프로젝트 경진대회][19-P625]-5G를 이용한 울산항 안전운항 시뮬레이션](http://img.youtube.com/vi/Kb9kTH-7CJw/0.jpg)](https://youtu.be/Kb9kTH-7CJw?t=0s)
+    
     
